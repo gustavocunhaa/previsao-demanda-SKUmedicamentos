@@ -75,11 +75,12 @@ def pipeline_trusted_refined():
     df_refined = pd.DataFrame() # Dataframe vazio que ira receber os valores de todos os arquivos limpos
     for csv_file in list_files_trusted:
         df_trusted = open_csv(dataTrustedPath, csv_file , sep=';')
-        df_refined = pd.concat([df_refined, df_trusted])
+        df_process = create_index_ts(df_trusted)
+        df_refined = pd.concat([df_refined, df_process])
         print(f"Arquivo {csv_file} unido no dataframe final")
-    df_final = create_index_ts(df_refined)
+   
     csv_refined_name = 'DF_REFINED_EDA_INDUSTRIALIZADOS.csv'
-    save_csv(df_final, dataRefinedPath, csv_refined_name, sep=';')
+    save_csv(df_refined, dataRefinedPath, csv_refined_name, sep=';')
 
     return print("Fim do pipeline de dados: trusted - refined")
 
